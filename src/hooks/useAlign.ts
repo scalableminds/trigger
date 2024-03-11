@@ -212,6 +212,7 @@ export default function useAlign(
         };
       } else {
         const rect = target.getBoundingClientRect();
+        console.log("target.getBoundingClientRect()", target.getBoundingClientRect());
         targetRect = {
           x: rect.x,
           y: rect.y,
@@ -301,6 +302,8 @@ export default function useAlign(
         scaleY === 0 ||
         (isDOM(target) && !isVisible(target))
       ) {
+        console.warn("isDOM(target)", isDOM(target))
+        console.warn("!isVisible(target)", !isVisible(target))
         return;
       }
 
@@ -704,6 +707,7 @@ export default function useAlign(
 
   // Reset ready status when placement & open changed
   const resetReady = () => {
+    console.log("RESET");
     setOffsetInfo((ori) => ({
       ...ori,
       ready: false,

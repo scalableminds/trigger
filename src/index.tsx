@@ -381,6 +381,7 @@ export function generateTrigger(
     ) => {
       setMousePos([event.clientX, event.clientY]);
     };
+    console.log("mousePos != null", mousePos != null, alignPoint);
 
     const [
       ready,
@@ -403,6 +404,7 @@ export function generateTrigger(
       popupAlign,
       onPopupAlign,
     );
+    console.log("info", { ready, offsetX, alignInfo });
 
     const [showActions, hideActions] = useAction(
       mobile,

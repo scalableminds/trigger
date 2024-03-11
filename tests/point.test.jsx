@@ -25,7 +25,7 @@ describe('Trigger.Point', () => {
         <div
           className="scroll"
           // Jest can not get calculated style in jsdom. So we need to set it manually
-          style={{ overflowX: 'hidden', overflowY: 'hidden' }}
+          style={{ overflowX: 'hidden', overflowY: 'hidden', width: 500, height: 500 }}
         >
           <Trigger
             ref={this.props.triggerRef}
@@ -34,7 +34,7 @@ describe('Trigger.Point', () => {
             alignPoint
             {...this.props}
           >
-            <div className="point-region" />
+            <div className="point-region" style={{ width: 100, height: 200 }} />
           </Trigger>
         </div>
       );
@@ -140,6 +140,27 @@ describe('Trigger.Point', () => {
       fireEvent.scroll(scrollDiv);
 
       expect(document.querySelector('.rc-trigger-popup-hidden')).toBeTruthy();
+    });
+
+    it('should default to targets position when shown in controlled manner', async () => {
+      // TODO:
+      // This test does not work at all at the moment, because useAlign calls
+      // isVisible on the trigger's target (div with class "point-region").
+      // For that div, getBoundingClientRect() always returns a width and height
+      // of zero. Therefore, it is interpreted as not visible and useAlign
+      // returns ready==false.
+      const { container } = render(<Demo popupVisible action={[]} />);
+      await trigger(container, 'click', { clientX: 11, clientY: 28 });
+      await trigger(container, 'mouseenter', { clientX: 10, clientY: 20 });
+      await trigger(container, 'mouseover', { clientX: 9, clientY: 3 });
+
+      const popup = document.querySelector('.rc-trigger-popup');
+      console.log("popup.style.left", popup.style.left);
+      console.log("popup.style.top", popup.style.top);
+
+
+      // todo: compare with proper value
+      expect(popup.style.left).toEqual(0);
     });
   });
 
